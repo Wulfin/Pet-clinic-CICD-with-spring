@@ -49,10 +49,22 @@ pipeline {
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
-        
+
         stage("Build war file"){
             steps{
                 sh " mvn clean install"
+            }
+        }
+
+        stage("Docker Build & Push"){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-creds' , toolName: 'docker') {
+                            sh "docker build -t petclinic ."
+                            sh "docker tag petclinic saifffff/pet-clinic:latest "
+                            sh "docker push saifffff/pet-clinic123:latest "
+                    }
+                }
             }
         }
     }
