@@ -15,7 +15,7 @@ pipeline {
          
         stage("Git Checkout"){
             steps{
-                git 'https://github.com/Wulfin/Pet-clinic-CICD-with-spring.git'
+                git branch: 'main', url: 'https://github.com/Wulfin/Pet-clinic-CICD-with-spring.git'
             }
         }
         
