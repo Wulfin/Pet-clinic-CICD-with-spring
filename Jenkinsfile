@@ -12,15 +12,34 @@ pipeline {
                  cleanWs()
              }
          }
+         
         stage("Git Checkout"){
             steps{
-                git 'https://github.com/Aj7Ay/amazon-eks-jenkins-terraform-aj7.git'
+                git 'https://github.com/Wulfin/Pet-clinic-CICD-with-spring.git'
             }
         }
         
         stage("Maven Compile"){
             steps{
                 sh "mvn clean compile"
+            }
+        }
+
+        stage("Sonarqube Analysis "){
+            steps{
+                script{
+                withSonarQubeEnv(credentialsId: 'sonar-token') {
+                sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate'){
+            steps{
+                script{
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                }
             }
         }
     }
