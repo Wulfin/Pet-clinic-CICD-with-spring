@@ -50,11 +50,11 @@ pipeline {
             }
         }
 
-        stage("Build war file"){
-            steps{
-                sh " mvn clean install"
-            }
-        }
+        // stage("Build war file"){
+        //     steps{
+        //         sh " mvn clean install"
+        //     }
+        // }
 
         stage("Docker Build & Push"){
             steps{
@@ -62,9 +62,15 @@ pipeline {
                     withDockerRegistry(credentialsId: 'docker-creds' , toolName: 'docker') {
                             sh "docker build -t petclinic ."
                             sh "docker tag petclinic saifffff/pet-clinic:latest "
-                            sh "docker push saifffff/pet-clinic123:latest "
+                            sh "docker push saifffff/pet-clinic:latest "
                     }
                 }
+            }
+        }
+
+        stage("Deploy Using Docker"){
+            steps{
+                sh " docker run -d --name petclinic -p 8082:8080 saifffff/pet-clinic:latest "
             }
         }
     }
