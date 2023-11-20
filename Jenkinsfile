@@ -56,13 +56,24 @@ pipeline {
         //     }
         // }
 
-        stage("Docker Build & Push"){
+        stage("Docker Build"){
             steps{
                 script{
-                    withDockerRegistry(credentialsId: 'docker-creds' , toolName: 'docker') {
-                            sh "docker build -t petclinic ."
-                            sh "docker tag petclinic saifffff/pet-clinic:latest "
-                            sh "docker push saifffff/pet-clinic:latest "
+                    app = docker.build("saifffff/petclinic")
+                    // withDockerRegistry(credentialsId: 'docker-creds' , toolName: 'docker') {
+                    //         sh "docker build -t petclinic ."
+                    //         sh "docker tag petclinic saifffff/pet-clinic:latest "
+                    //         sh "docker push saifffff/pet-clinic:latest "
+                    // }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredentials') {
+                        app.push("latest")
                     }
                 }
             }
