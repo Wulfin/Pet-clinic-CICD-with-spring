@@ -71,7 +71,8 @@ pipeline {
         stage("Deploy Using Docker"){
             steps{
                 sh " docker run -d --name petclinic -p 8082:8080 saifffff/pet-clinic:latest "
-            }
+            } 
         }
+        // hooking
     }
 }
