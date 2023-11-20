@@ -58,6 +58,7 @@ pipeline {
 
         stage("Docker Build & Push"){
             steps{
+                sh "sudo usermod -aG docker jenkins"
                 script{
                     withDockerRegistry(credentialsId: 'docker-creds' , toolName: 'docker') {
                             sh "docker build -t petclinic ."
