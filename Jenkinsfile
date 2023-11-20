@@ -43,6 +43,12 @@ pipeline {
             }
         }
 
+        stage('TRIVY FS SCAN') {
+            steps {
+                sh "trivy fs ."
+            }
+        } 
+
         stage("OWASP Dependency Check"){
             steps{
                 dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP-Check'
