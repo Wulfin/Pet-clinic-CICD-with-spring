@@ -61,8 +61,7 @@ pipeline {
                 script{
                     withDockerRegistry(credentialsId: 'docker-creds' , toolName: 'docker') {
                             docker.build("saifffff/petclinic")
-                            sh "docker tag petclinic saifffff/pet-clinic:latest "
-                            sh "docker push saifffff/pet-clinic:latest "
+                            sh "docker push saifffff/petclinic:latest"
                     }
                 }
             }
@@ -72,7 +71,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-creds' , toolName: 'docker') {
-                            sh "docker push saifffff/pet-clinic:latest"
+                            sh "docker push saifffff/petclinic:latest"
                     }
                 }
             }
@@ -80,7 +79,7 @@ pipeline {
 
         stage("Deploy Using Docker"){
             steps{
-                sh " docker run -d --name petclinic -p 8082:8080 saifffff/pet-clinic:latest "
+                sh " docker run -d --name petclinic -p 8082:8080 saifffff/petclinic:latest"
             } 
         }
         // hooking 6
