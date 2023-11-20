@@ -43,12 +43,12 @@ pipeline {
             }
         }
 
-        // stage("OWASP Dependency Check"){
-        //     steps{
-        //         dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP-Check'
-        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        //     }
-        // }
+        stage("OWASP Dependency Check"){
+            steps{
+                dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP-Check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
 
         stage("Build war file"){
             steps{
@@ -82,6 +82,5 @@ pipeline {
                 sh " docker run -d --name petclinic -p 8082:8080 saifffff/petclinic:latest"
             } 
         }
-        // hooking 6
     }
 }
