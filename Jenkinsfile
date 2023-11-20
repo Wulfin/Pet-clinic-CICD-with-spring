@@ -50,11 +50,11 @@ pipeline {
         //     }
         // }
 
-        // stage("Build war file"){
-        //     steps{
-        //         sh " mvn clean install"
-        //     }
-        // }
+        stage("Build war file"){
+            steps{
+                sh " mvn clean install"
+            }
+        }
 
         stage("Docker Build"){
             steps{

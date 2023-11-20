@@ -1,5 +1,4 @@
 target/*
-!target/spring-petclinic-2.1.0.war
 .settings/*
 .classpath
 .project
